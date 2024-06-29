@@ -86,7 +86,7 @@
 <body>
     
     <header>
-        <img src="https://aileadtransfers.com/ADS/Images/logo1.png" alt="Logo" class="logo">
+        <img src="public/logo.png" alt="Logo" class="logo">
     </header>
     <div id="dummy" class="dummy"></div>
     <div id="loading-overlay">
@@ -131,32 +131,42 @@ fetch("/data")
         let email 
         let phonenumber
         
-    fetch('/user')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(userData => {
-    // Extracting details
-    name = userData.name;
-    email = userData.email;
-    phonenumber = userData.phonenumber
-    address = {
-      city: userData.city,
-      zip: userData.zip,
-      country: userData.country,
-    };
+  // Fetching user data
+fetch('/user')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(userData => {
+        console.log(userData);
+        // Extracting details
+        name = userData.name || "";
+        email = userData.email || "";
+        phonenumber = userData.phonenumber || "";
+        city = userData.city || "";
+        zip = userData.zip || "";
+        country = userData.country || "";
 
-    // Use the extracted data as needed
-    // console.log('Name:', name);
-    // console.log('Email:', email);
-    // console.log('Address:', address);
-  })
-  .catch(error => {
-    console.error('Error fetching user data:', error.message);
-  });
+        // Now that we have user data, dynamically generate the initial HTML content
+         document.getElementById("dummy").innerHTML = `
+            <p><b>Hello ${name},</b></p>
+            <p>Thank you for filling out the form and expressing interest in the No Cost Child ID Kit.</p>
+            <p>Did you know that more than 1000 kids will be reported missing today in the United States and Canada? While this statistic can be alarming, you can take an extra step right now to act quickly if the need arises.</p>
+            <p>A no-cost Child Safe Kit® will contain all the essential information about your child, ensuring authorities can quickly locate them if they're reported missing.</p>
+            <p>Now, let's confirm some information so we can activate your Child ID Kits:</p>
+            <div class="input-container">
+                <p><b>Are you married? </b></p>
+                <input type="text" id="marriageStatus" placeholder="Enter 'yes' or 'no'">
+                <button type="button" onclick="submitMarriageStatus()">Submit</button>
+            </div>
+        `;
+    })
+    .catch(error => {
+        console.error('Error fetching user data:', error.message);
+    });
+
         var meeting = 'https://us02web.zoom.us/j/84789419568?pwd=VXhkalJPOWFHWTdDYnF1SVVsZnhQZz09'
         // Replace with the actual name
         function displayLoading() {
@@ -173,18 +183,7 @@ fetch("/data")
             const lowercasedValue = value.toLowerCase();
             return negativeKeywords.some(keyword => lowercasedValue.includes(keyword));
         }
-        document.getElementById("dummy").innerHTML = `
-            <p><b>Hello ${name},</b></p>
-            <p>Thank you for filling out the form and expressing interest in the No Cost Child ID Kit.</p>
-            <p>Did you know that more than 1000 kids will be reported missing today in the United States and Canada? While this statistic can be alarming, you can take an extra step right now to act quickly if the need arises.</p>
-            <p>A no-cost Child Safe Kit® will contain all the essential information about your child, ensuring authorities can quickly locate them if they're reported missing.</p>
-            <p>Now, let's confirm some information so we can activate your Child ID Kits:</p>
-            <div class="input-container">
-                <p><b>Are you married? </b></p>
-                <input type="text" id="marriageStatus" placeholder="Enter 'yes' or 'no'">
-                <button type="button" onclick="submitMarriageStatus()">Submit</button>
-            </div>
-        `;
+       
         function idontknow(){
             let ehe = document.getElementById("idont").value
             data[3] = time
@@ -233,7 +232,7 @@ fetch(serverEndpoint, {
             <p>Let me check if a benefits coordinator is available to activate your benefits and issue your No Cost Child ID Kit. </p>    
             <div class="input-container">
                 <b><p>Here is the availablity of the bot : ${comma} , check if any one is good for you?</b></p>
-                <input type="text" id="idont" placeholder="Enter 'yes' or 'no'">
+                <input type="text" id="idont">
                 <button type="button" onclick="idontknow()">Submit</button>
             </div>`
                 hideLoading();  

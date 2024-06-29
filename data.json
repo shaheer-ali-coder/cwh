@@ -25,5 +25,14 @@
     "zip": "d",
     "country": "d",
     "platform": "childsafetykit"
+  },
+  "name is ": {
+    "name": "name is ",
+    "email": "smartshaheerali@gmail.com",
+    "city": "karachi",
+    "phonenumber": "+923102552345",
+    "zip": "41532",
+    "country": "pakistan",
+    "platform": "childsafetykit"
   }
 }

@@ -45,7 +45,8 @@ async function sendEmail(to, subject, text) {
     from: 'benefitactivation@gmail.com', 
     to,
     subject, 
-    text, 
+       html: text, 
+
     
   };
 
@@ -62,6 +63,10 @@ async function sendEmail(to, subject, text) {
 app.use(cors());
 app.use(bodyParser.json());
 app.get('/childsafetykit', (req, res) => {
+    let absolutePath = path.join(__dirname, '/pages/childsafetykit.html');
+    res.sendFile(absolutePath);
+  })
+  app.get('/', (req, res) => {
     let absolutePath = path.join(__dirname, '/pages/childsafetykit.html');
     res.sendFile(absolutePath);
   })
